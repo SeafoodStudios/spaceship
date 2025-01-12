@@ -6,12 +6,23 @@
     <title>Spaceship</title>
 </head>
 <body>
-    <h1>Spaceship</h1>
-    <p>Spaceship is an Arduino LCD video game.</p>
-    <p>mBlock download:</p>
-    <a href="https://drive.google.com/drive/folders/12QU5A7-aK5Kal6AjsFf-02iryBxvPh4P?usp=sharing" target="_blank">Download Spaceship</a>
-    <p>Arduino IDE Code:</p>
-    <pre>
+    <!-- Header Section -->
+    <header>
+        <h1>Spaceship</h1>
+        <p>Spaceship is an Arduino LCD video game.</p>
+    </header>
+
+    <!-- Download Section -->
+    <section id="download">
+        <h2>Download</h2>
+        <p>mBlock download:</p>
+        <a href="https://drive.google.com/drive/folders/12QU5A7-aK5Kal6AjsFf-02iryBxvPh4P?usp=sharing" target="_blank">Download Spaceship</a>
+    </section>
+
+    <!-- Arduino IDE Code Section -->
+    <section id="arduino-code">
+        <h2>Arduino IDE Code</h2>
+        <pre>
 #include "inc/LiquidCrystal_I2C.h"
 
 #include <Arduino.h>
@@ -24,296 +35,387 @@ float Meteor_Y = 0;
 float Meteor_Difficulty = 0;
 float Game_Over_ = 0;
 
-LiquidCrystal_I2C lcd(0x27, 20, 4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
+LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 double currentTime = 0;
 double lastTime = 0;
 double getLastTime(){
-    return currentTime = millis() / 1000.0 - lastTime;
+        return currentTime = millis()/1000.0 - lastTime;
+}
+void Meteor_Controls (){
+  if(Meteor_X == 0.000000){
+      if(!((Spaceship_Side == Meteor_Y))){
+          Meteor_X = random(5, 15 +1);
+          Meteor_Y = random(0, 1 +1);
+          if(!((Meteor_Difficulty < 0.15))){
+              Meteor_Difficulty += -0.05;
+
+          }
+
+      }
+
+  }else{
+      Meteor_X = ((Meteor_X - 1));
+      Meteor_Y = Meteor_Y;
+
+  }
+
 }
 
-void Meteor_Controls() {
-    if (Meteor_X == 0.000000) {
-        if (!((Spaceship_Side == Meteor_Y))) {
-            Meteor_X = random(5, 15 + 1);
-            Meteor_Y = random(0, 1 + 1);
-            if (!((Meteor_Difficulty < 0.15))) {
-                Meteor_Difficulty += -0.05;
-            }
-        }
-    } else {
-        Meteor_X = ((Meteor_X - 1));
-        Meteor_Y = Meteor_Y;
-    }
-}
+void Check_Meteor (){
+  if(Meteor_Y == 0.000000){
+      if(Meteor_X == 15.000000){
+          lcd.setCursor(15,0);
+          lcd.print("o");
 
-void Check_Meteor() {
-    if (Meteor_Y == 0.000000) {
-        if (Meteor_X == 15.000000) {
-            lcd.setCursor(15, 0);
-            lcd.print("o");
-        } else {
-            if (Meteor_X == 14.000000) {
-                lcd.setCursor(14, 0);
-                lcd.print("o");
-            } else {
-                if (Meteor_X == 13.000000) {
-                    lcd.setCursor(13, 0);
-                    lcd.print("o");
-                } else {
-                    if (Meteor_X == 12.000000) {
-                        lcd.setCursor(12, 0);
-                        lcd.print("o");
-                    } else {
-                        if (Meteor_X == 11.000000) {
-                            lcd.setCursor(11, 0);
-                            lcd.print("o");
-                        } else {
-                            if (Meteor_X == 10.000000) {
-                                lcd.setCursor(10, 0);
-                                lcd.print("o");
-                            } else {
-                                if (Meteor_X == 9.000000) {
-                                    lcd.setCursor(9, 0);
-                                    lcd.print("o");
-                                } else {
-                                    if (Meteor_X == 8.000000) {
-                                        lcd.setCursor(8, 0);
-                                        lcd.print("o");
-                                    } else {
-                                        if (Meteor_X == 7.000000) {
-                                            lcd.setCursor(7, 0);
-                                            lcd.print("o");
-                                        } else {
-                                            if (Meteor_X == 6.000000) {
-                                                lcd.setCursor(6, 0);
-                                                lcd.print("o");
-                                            } else {
-                                                if (Meteor_X == 5.000000) {
-                                                    lcd.setCursor(5, 0);
-                                                    lcd.print("o");
-                                                } else {
-                                                    if (Meteor_X == 4.000000) {
-                                                        lcd.setCursor(4, 0);
-                                                        lcd.print("o");
-                                                    } else {
-                                                        if (Meteor_X == 3.000000) {
-                                                            lcd.setCursor(3, 0);
-                                                            lcd.print("o");
-                                                        } else {
-                                                            if (Meteor_X == 2.000000) {
-                                                                lcd.setCursor(2, 0);
-                                                                lcd.print("o");
-                                                            } else {
-                                                                if (Meteor_X == 1.000000) {
-                                                                    lcd.setCursor(1, 0);
-                                                                    lcd.print("o");
-                                                                } else {
-                                                                    if (Meteor_X == 0.000000) {
-                                                                        lcd.setCursor(0, 0);
-                                                                        lcd.print("o");
-                                                                    } else {
-                                                                        lcd.setCursor(0, 0);
-                                                                        lcd.print("ERR: Meteor Y0");
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    } else {
-        if (Meteor_X == 15.000000) {
-            lcd.setCursor(15, 1);
-            lcd.print("o");
-        } else {
-            if (Meteor_X == 14.000000) {
-                lcd.setCursor(14, 1);
-                lcd.print("o");
-            } else {
-                if (Meteor_X == 13.000000) {
-                    lcd.setCursor(13, 1);
-                    lcd.print("o");
-                } else {
-                    if (Meteor_X == 12.000000) {
-                        lcd.setCursor(12, 1);
-                        lcd.print("o");
-                    } else {
-                        if (Meteor_X == 11.000000) {
-                            lcd.setCursor(11, 1);
-                            lcd.print("o");
-                        } else {
-                            if (Meteor_X == 10.000000) {
-                                lcd.setCursor(10, 1);
-                                lcd.print("o");
-                            } else {
-                                if (Meteor_X == 9.000000) {
-                                    lcd.setCursor(9, 1);
-                                    lcd.print("o");
-                                } else {
-                                    if (Meteor_X == 8.000000) {
-                                        lcd.setCursor(8, 1);
-                                        lcd.print("o");
-                                    } else {
-                                        if (Meteor_X == 7.000000) {
-                                            lcd.setCursor(7, 1);
-                                            lcd.print("o");
-                                        } else {
-                                            if (Meteor_X == 6.000000) {
-                                                lcd.setCursor(6, 1);
-                                                lcd.print("o");
-                                            } else {
-                                                if (Meteor_X == 5.000000) {
-                                                    lcd.setCursor(5, 1);
-                                                    lcd.print("o");
-                                                } else {
-                                                    if (Meteor_X == 4.000000) {
-                                                        lcd.setCursor(4, 1);
-                                                        lcd.print("o");
-                                                    } else {
-                                                        if (Meteor_X == 3.000000) {
-                                                            lcd.setCursor(3, 1);
-                                                            lcd.print("o");
-                                                        } else {
-                                                            if (Meteor_X == 2.000000) {
-                                                                lcd.setCursor(2, 1);
-                                                                lcd.print("o");
-                                                            } else {
-                                                                if (Meteor_X == 1.000000) {
-                                                                    lcd.setCursor(1, 1);
-                                                                    lcd.print("o");
-                                                                } else {
-                                                                    if (Meteor_X == 0.000000) {
-                                                                        lcd.setCursor(0, 1);
-                                                                        lcd.print("o");
-                                                                    } else {
-                                                                        lcd.setCursor(0, 0);
-                                                                        lcd.print("ERR: Meteor Y1");
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+      }else{
+          if(Meteor_X == 14.000000){
+              lcd.setCursor(14,0);
+              lcd.print("o");
 
-void Check_Spaceship() {
-    if (analogRead(A0 + 0) < 100) {
-        lcd.setCursor(0, 0);
-        lcd.print(">");
-        Spaceship_Side = 0;
-    } else {
-        if (analogRead(A0 + 0) > 1000) {
-            lcd.setCursor(0, 1);
-            lcd.print(">");
-            Spaceship_Side = 1;
-        } else {
-            if (Spaceship_Side == 0.000000) {
-                lcd.setCursor(0, 0);
-                lcd.print(">");
-            } else {
-                if (Spaceship_Side == 1.000000) {
-                    lcd.setCursor(0, 1);
-                    lcd.print(">");
-                } else {
-                }
-            }
-        }
-    }
+          }else{
+              if(Meteor_X == 13.000000){
+                  lcd.setCursor(13,0);
+                  lcd.print("o");
+
+              }else{
+                  if(Meteor_X == 12.000000){
+                      lcd.setCursor(12,0);
+                      lcd.print("o");
+
+                  }else{
+                      if(Meteor_X == 11.000000){
+                          lcd.setCursor(11,0);
+                          lcd.print("o");
+
+                      }else{
+                          if(Meteor_X == 10.000000){
+                              lcd.setCursor(10,0);
+                              lcd.print("o");
+
+                          }else{
+                              if(Meteor_X == 9.000000){
+                                  lcd.setCursor(9,0);
+                                  lcd.print("o");
+
+                              }else{
+                                  if(Meteor_X == 8.000000){
+                                      lcd.setCursor(8,0);
+                                      lcd.print("o");
+
+                                  }else{
+                                      if(Meteor_X == 7.000000){
+                                          lcd.setCursor(7,0);
+                                          lcd.print("o");
+
+                                      }else{
+                                          if(Meteor_X == 6.000000){
+                                              lcd.setCursor(6,0);
+                                              lcd.print("o");
+
+                                          }else{
+                                              if(Meteor_X == 5.000000){
+                                                  lcd.setCursor(5,0);
+                                                  lcd.print("o");
+
+                                              }else{
+                                                  if(Meteor_X == 4.000000){
+                                                      lcd.setCursor(4,0);
+                                                      lcd.print("o");
+
+                                                  }else{
+                                                      if(Meteor_X == 3.000000){
+                                                          lcd.setCursor(3,0);
+                                                          lcd.print("o");
+
+                                                      }else{
+                                                          if(Meteor_X == 2.000000){
+                                                              lcd.setCursor(2,0);
+                                                              lcd.print("o");
+
+                                                          }else{
+                                                              if(Meteor_X == 1.000000){
+                                                                  lcd.setCursor(1,0);
+                                                                  lcd.print("o");
+
+                                                              }else{
+                                                                  if(Meteor_X == 0.000000){
+                                                                      lcd.setCursor(0,0);
+                                                                      lcd.print("o");
+
+                                                                  }else{
+                                                                      lcd.setCursor(0,0);
+                                                                      lcd.print("ERR: Meteor Y0");
+
+                                                                  }
+
+                                                              }
+
+                                                          }
+
+                                                      }
+
+                                                  }
+
+                                              }
+
+                                          }
+
+                                      }
+
+                                  }
+
+                              }
+
+                          }
+
+                      }
+
+                  }
+
+              }
+
+          }
+
+      }
+
+  }else{
+      if(Meteor_X == 15.000000){
+          lcd.setCursor(15,1);
+          lcd.print("o");
+
+      }else{
+          if(Meteor_X == 14.000000){
+              lcd.setCursor(14,1);
+              lcd.print("o");
+
+          }else{
+              if(Meteor_X == 13.000000){
+                  lcd.setCursor(13,1);
+                  lcd.print("o");
+
+              }else{
+                  if(Meteor_X == 12.000000){
+                      lcd.setCursor(12,1);
+                      lcd.print("o");
+
+                  }else{
+                      if(Meteor_X == 11.000000){
+                          lcd.setCursor(11,1);
+                          lcd.print("o");
+
+                      }else{
+                          if(Meteor_X == 10.000000){
+                              lcd.setCursor(10,1);
+                              lcd.print("o");
+
+                          }else{
+                              if(Meteor_X == 9.000000){
+                                  lcd.setCursor(9,1);
+                                  lcd.print("o");
+
+                              }else{
+                                  if(Meteor_X == 8.000000){
+                                      lcd.setCursor(8,1);
+                                      lcd.print("o");
+
+                                  }else{
+                                      if(Meteor_X == 7.000000){
+                                          lcd.setCursor(7,1);
+                                          lcd.print("o");
+
+                                      }else{
+                                          if(Meteor_X == 6.000000){
+                                              lcd.setCursor(6,1);
+                                              lcd.print("o");
+
+                                          }else{
+                                              if(Meteor_X == 5.000000){
+                                                  lcd.setCursor(5,1);
+                                                  lcd.print("o");
+
+                                              }else{
+                                                  if(Meteor_X == 4.000000){
+                                                      lcd.setCursor(4,1);
+                                                      lcd.print("o");
+
+                                                  }else{
+                                                      if(Meteor_X == 3.000000){
+                                                          lcd.setCursor(3,1);
+                                                          lcd.print("o");
+
+                                                      }else{
+                                                          if(Meteor_X == 2.000000){
+                                                              lcd.setCursor(2,1);
+                                                              lcd.print("o");
+
+                                                          }else{
+                                                              if(Meteor_X == 1.000000){
+                                                                  lcd.setCursor(1,1);
+                                                                  lcd.print("o");
+
+                                                              }else{
+                                                                  if(Meteor_X == 0.000000){
+                                                                      lcd.setCursor(0,1);
+                                                                      lcd.print("o");
+
+                                                                  }else{
+                                                                      lcd.setCursor(0,0);
+                                                                      lcd.print("ERR: Meteor Y1");
+
+                                                                  }
+
+                                                              }
+
+                                                          }
+
+                                                      }
+
+                                                  }
+
+                                              }
+
+                                          }
+
+                                      }
+
+                                  }
+
+                              }
+
+                          }
+
+                      }
+
+                  }
+
+              }
+
+          }
+
+      }
+
+  }
+
+}
+void Check_Spaceship (){
+  if(analogRead(A0+0) < 100){
+      lcd.setCursor(0,0);
+      lcd.print(">");
+      Spaceship_Side = 0;
+
+  }else{
+      if(analogRead(A0+0) > 1000){
+          lcd.setCursor(0,1);
+          lcd.print(">");
+          Spaceship_Side = 1;
+
+      }else{
+          if(Spaceship_Side == 0.000000){
+              lcd.setCursor(0,0);
+              lcd.print(">");
+
+          }else{
+              if(Spaceship_Side == 1.000000){
+                  lcd.setCursor(0,1);
+                  lcd.print(">");
+
+              }else{
+
+              }
+
+          }
+
+      }
+
+  }
+
 }
 
 void _delay(float seconds) {
-    long endTime = millis() + seconds * 1000;
-    while (millis() < endTime) _loop();
+  long endTime = millis() + seconds * 1000;
+  while(millis() < endTime) _loop();
 }
 
 void setup() {
-    lcd.init();
-    lcd.init();
-    lcd.backlight();
-    pinMode(A0 + 0, INPUT);
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Spaceship v1.2");
-    lcd.setCursor(0, 1);
-    lcd.print("Down to start.");
-    while (!(analogRead(A0 + 0) > 1000)) {
-        _loop();
-    }
-    lastTime = millis() / 1000.0;
-    Spaceship_Side = 0;
-    Meteor_X = 15;
-    Meteor_Y = random(0, 1 + 1);
-    Meteor_Difficulty = 1;
-    while (1) {
-        Check_Spaceship();
-        Meteor_Controls();
-        Check_Meteor();
-        _delay(float(Meteor_Difficulty));
-        if ((Spaceship_Side == Meteor_Y) && (Meteor_X == 0.000000)) {
-            lcd.clear();
-            lcd.setCursor(0, 0);
-            lcd.print("GAME OVER");
-            lcd.setCursor(0, 1);
-            lcd.print(String("SCORE: ") + String(getLastTime()));
-            _delay(10);
-            Spaceship_Side = 0;
-            Meteor_X = 15;
-            Meteor_Y = random(0, 1 + 1);
-            Meteor_Difficulty = 1;
-            lastTime = millis() / 1000.0;
-        } else {
-            lcd.clear();
-        }
+  lcd.init();
+  lcd.init();
+  lcd.backlight();
+  pinMode(A0+0,INPUT);
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Spaceship v1.2");
+  lcd.setCursor(0,1);
+  lcd.print("Down to start.");
+  while(!(analogRead(A0+0) > 1000))
+  {
+    _loop();
+  }
+  lastTime = millis()/1000.0;
+  Spaceship_Side = 0;
+  Meteor_X = 15;
+  Meteor_Y = random(0, 1 +1);
+  Meteor_Difficulty = 1;
+  while(1) {
+      Check_Spaceship();
+      Meteor_Controls();
+      Check_Meteor();
+      _delay(float(Meteor_Difficulty));
+      if((Spaceship_Side == Meteor_Y)  &&  (Meteor_X == 0.000000)){
+          lcd.clear();
+          lcd.setCursor(0,0);
+          lcd.print("GAME OVER");
+          lcd.setCursor(0,1);
+          lcd.print(String("SCORE: ") + String(getLastTime()));
+          _delay(10);
+          Spaceship_Side = 0;
+          Meteor_X = 15;
+          Meteor_Y = random(0, 1 +1);
+          Meteor_Difficulty = 1;
+          lastTime = millis()/1000.0;
 
-        _loop();
-    }
+      }else{
+          lcd.clear();
+
+      }
+
+      _loop();
+  }
+
 }
 
 void _loop() {
 }
 
 void loop() {
-    _loop();
+  _loop();
 }
-    </pre>
+        </pre>
+    </section>
 
-    <p>Instructions:</p>
-    <p><strong>Basic Setup is Required:</strong></p>
-    <ol>
-        <li>Get an Arduino, an LCD, and an Arduino Joystick.</li>
-        <li>Plug a male-female black wire into the LCD's GND pin. Then, connect that into your Arduino's breadboard's negative pin.</li>
-        <li>Plug a male-female red wire into the LCD's VCC pin. Then, connect that into your Arduino's breadboard's positive pin.</li>
-        <li>Plug a male-female (color of your choice) wire into the LCD's SDA pin. Then, connect that into your Arduino's other SDA pin.</li>
-        <li>Plug a male-female (color of your choice) wire into the LCD's SCL pin. Then, connect that into your Arduino's other SCL pin.</li>
-        <li>Plug a male-female black wire into the Joystick's GND pin. Then, connect that into your Arduino's breadboard's negative pin.</li>
-        <li>Plug a male-female red wire into the Joystick's +5V pin. Then, connect that into your Arduino's breadboard's positive pin.</li>
-        <li>Plug a male-female (color of your choice) wire into your Joystick's VRX pin. Then, connect it into Analog Pin #1.</li>
-        <li>Plug a male-female (color of your choice) wire into your Joystick's VRY pin. Then, connect it into Analog Pin #0.</li>
-        <li>Upload the game code.</li>
-        <li>Adjust the screw on the back of your LCD using a screwdriver until the text on it is very clear.</li>
-        <li>Play the game!</li>
-    </ol>
-    <p>Spaceship © 2025 by William Lu is licensed under CC BY-NC-SA 4.0</p>
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank">License</a>
+    <!-- Instructions Section -->
+    <section id="instructions">
+        <h2>Instructions</h2>
+        <p>Basic Setup is Required:</p>
+        <ol>
+            <li>Get an Arduino, an LCD, and an Arduino Joystick.</li>
+            <li>Plug a male-female black wire into the LCD's GND pin. Then, connect that into your Arduino's breadboard's negative pin.</li>
+            <li>Plug a male-female red wire into the LCD's VCC pin. Then, connect that into your Arduino's breadboard's positive pin.</li>
+            <li>Plug a male-female (color of your choice) wire into the LCD's SDA pin. Then, connect that into your Arduino's other SDA pin.</li>
+            <li>Plug a male-female (color of your choice) wire into the LCD's SCL pin. Then, connect that into your Arduino's other SCL pin.</li>
+            <li>Plug a male-female black wire into the Joystick's GND pin. Then, connect that into your Arduino's breadboard's negative pin.</li>
+            <li>Plug a male-female red wire into the Joystick's +5V pin. Then, connect that into your Arduino's breadboard's positive pin.</li>
+            <li>Plug a male-female (color of your choice) wire into your Joystick's VRX pin. Then, connect it into Analog Pin #1.</li>
+            <li>Plug a male-female (color of your choice) wire into your Joystick's VRY pin. Then, connect it into Analog Pin #0.</li>
+            <li>Upload the game code.</li>
+            <li>Adjust the screw on the back of your LCD using a screwdriver until the text on it is very clear.</li>
+            <li>Play the game!</li>
+        </ol>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>Spaceship © 2025 by William Lu is licensed under CC BY-NC-SA 4.0</p>
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank">License</a>
+    </footer>
 </body>
 </html>
